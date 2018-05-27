@@ -19,9 +19,9 @@ public class Seat{
     
     private boolean ocupied;
     
-    public void setOcupied(){
+    public void setOcupied(Boolean ocupied){
        
-        this.ocupied = true;
+        this.ocupied = ocupied;
     
     }
     

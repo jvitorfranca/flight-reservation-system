@@ -29,6 +29,13 @@ public class User {
         
     }
     
+    public String getEmail(){
+        return email;
+    }
+    public String getPassword(){
+        return password;
+    }
+    
     private void Reservate(Flight newFlight){
         
         //Access the selected Flight

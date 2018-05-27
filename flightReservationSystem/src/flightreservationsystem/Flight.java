@@ -32,9 +32,26 @@ public class Flight {
         
         for(int i = 0;i< arraySeat.length;i++){
             
-            for(Seat j : arraySeat[i]){
+            //Imprime o indice da fileira
+            if(i >= 9){
                 
-                if(j.getOcupied()){
+                System.out.printf("%d ",i+1);
+                
+            }else{
+                
+                System.out.printf("%d  ",i+1);
+                
+            }
+            
+            for(int j = 0;j < arraySeat[i].length;j++){
+                
+                //imprime o espaço entre o meio das fileiras
+                if(j == 3){
+                    System.out.print(" ");
+                }
+                
+                //Imprime 0 se livre e 1 se ocupado
+                if(arraySeat[i][j].getOcupied()){
                     
                     System.out.print("1");
                 
