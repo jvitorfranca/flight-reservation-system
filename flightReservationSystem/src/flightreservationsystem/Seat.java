@@ -11,21 +11,21 @@ package flightreservationsystem;
  */
 public class Seat{
 
-    Seat(boolean ocupied){
+    Seat(int ocupied){
     
         this.ocupied = ocupied;
     
     }
     
-    private boolean ocupied;
+    private int ocupied;
     
-    public void setOcupied(Boolean ocupied){
+    public void setOcupied(int ocupied){
        
         this.ocupied = ocupied;
     
     }
     
-    public boolean getOcupied(){
+    public int getOcupied(){
     
         return this.ocupied;
     

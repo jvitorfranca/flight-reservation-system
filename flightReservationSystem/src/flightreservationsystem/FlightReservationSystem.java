@@ -28,19 +28,13 @@ public class FlightReservationSystem {
             
             for (int j = 0;j < 6;j++){
                 
-                arraySeat[i][j] = new Seat(false);
+                arraySeat[i][j] = new Seat(0);
                 
             }
             
         }
         //inicializing Flight1
         Flight newFlight = new Flight("010", "01", "São Paulo", "25/05/2018",arraySeat);
-        
-        
-        
-        
-        
-        
         
         
         ArrayList<User> arrayUser = new ArrayList();
@@ -97,18 +91,62 @@ public class FlightReservationSystem {
                                 
                                 if(menuOptions == 1){
                                     
-                                    newFlight.print();
-                                }
-                                if(menuOptions == 5){
+                                    newFlight.seatMap();
+                                    
+                                    menuOptions = 100;
+                                    
+                                } else if(menuOptions == 2){
+                                    
+                                    newFlight.seatMap();
+
+                                    System.out.println("Insert the row of your seat. Ex: 20 ");
+
+                                    int row;
+
+                                    row = input.nextInt();
+
+                                    System.out.println("Insert the collumn of your seat. Ex: C ");
+
+                                    String col;
+
+                                    col = input.next();
+
+                                    ArrayList<Flight> arrayFlight = new ArrayList();
+
+                                    arrayFlight.add(newFlight);
+
+                                    newFlight.reservation(arraySeat, row, col, FlightReservationSystem.Logado);
+
+                                    newFlight.seatMap();
+                                    
+                                    Logado.getSeat();
+                                    
+                                    menuOptions = 100;
+                                    
+                                } else if(menuOptions == 3){
+                                    
+                                    newFlight.buy(arraySeat, Logado);
+                                    
+                                    menuOptions = 100;
+                                    
+                                } else if(menuOptions == 5){
+                                    
                                     FlightReservationSystem.Logado = null;
+                                    
                                     menuOptions = 106;
+                                    
                                 }
                             }
                         }else{
+                            
                             System.out.println("Incorrect Password");
+                        
                         }
+                        
                     }else{
+                        
                         System.out.println("Incorrect Email");
+                    
                     }
                 }
                 
@@ -155,6 +193,7 @@ public class FlightReservationSystem {
                 credit_card = input.nextLong();
 
                 User new_user = new User(name, cpf, email, password, cellphone, credit_card);
+                
                 arrayUser.add(new_user);
 
                 menuLogin = 100;

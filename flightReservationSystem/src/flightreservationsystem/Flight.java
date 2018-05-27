@@ -28,7 +28,7 @@ public class Flight {
     }
     
     
-    public void print(){
+    public void seatMap(){
         
         for(int i = 0;i< arraySeat.length;i++){
             
@@ -51,21 +51,64 @@ public class Flight {
                 }
                 
                 //Imprime 0 se livre e 1 se ocupado
-                if(arraySeat[i][j].getOcupied()){
-                    
-                    System.out.print("1");
-                
-                }else{
-                    
-                    System.out.print("0");
-                
-                }
+                System.out.print(arraySeat[i][j].getOcupied());
             }
             
+            System.out.println();
             System.out.println();
             
         }
     
+    }
+    
+    public void reservation(Seat arraySeat[][], int row, String col, User Logado){
+        
+        if (col.equalsIgnoreCase("A")){
+            
+            arraySeat[row - 1][1 - 1].setOcupied(1);
+            
+            Logado.setSeat(arraySeat[row - 1][1 - 1], row, 1);
+            
+        } else if (col.equalsIgnoreCase("B")){
+            
+            arraySeat[row - 1][2 - 1].setOcupied(1);
+            
+            Logado.setSeat(arraySeat[row - 1][2 - 1], row, 2);
+            
+        } else if (col.equalsIgnoreCase("C")){
+            
+            arraySeat[row - 1][3 - 1].setOcupied(1);
+            
+            Logado.setSeat(arraySeat[row - 1][3 - 1], row, 3);
+            
+        } else if (col.equalsIgnoreCase("D")){
+            
+            arraySeat[row - 1][4 - 1].setOcupied(1);
+            
+            Logado.setSeat(arraySeat[row - 1][4 - 1], row, 4);
+            
+        } else if (col.equalsIgnoreCase("E")){
+            
+            arraySeat[row - 1][5 - 1].setOcupied(1);
+            
+            Logado.setSeat(arraySeat[row - 1][5 - 1], row, 5);
+            
+        } else if (col.equalsIgnoreCase("F")){
+            
+            arraySeat[row - 1][6 - 1].setOcupied(1);
+            
+            Logado.setSeat(arraySeat[row - 1][6 - 1], row, 6);
+            
+        }
+        
+    }
+    
+    public void buy(Seat arraySeat[][], User Logado){
+        
+        arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(2);
+        
+        System.out.println("Purchase successful");
+        
     }
     
 }

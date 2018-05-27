@@ -15,8 +15,11 @@ public class User {
     private String cpf;
     private String email;
     private String password;
+    private Seat yourSeat;
     private long cellphone;
     private long credit_card;
+    private int row;
+    private int col;
      
     User(String name, String cpf, String email, String password, long cellphone, long credit_card){
         
@@ -43,6 +46,34 @@ public class User {
         //Check the Class of the Passenger and limitates its access to the array
         //Let the Passenger select a seat to be ocupied
         
+        
+    }
+    
+    public void setSeat(Seat seat, int row, int col){
+        
+        this.yourSeat = seat;
+        
+        this.row = row;
+        
+        this.col = col;
+        
+    }
+    
+    public void getSeat(){ 
+        
+        System.out.println("Seat: " + row  + " " + col);
+        
+    }
+    
+    public int getRow(){
+  
+        return this.row;
+        
+    }
+    
+    public int getCol(){
+  
+        return this.col;
         
     }
     
