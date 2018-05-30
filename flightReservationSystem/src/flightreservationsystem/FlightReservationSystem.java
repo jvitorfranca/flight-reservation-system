@@ -22,7 +22,9 @@ public class FlightReservationSystem {
         
         
         //inicializing Seats
-        Seat[][] arraySeat = new Seat [20][6];
+        Seat[][] arraySeat1 = new Seat [20][6];
+        Seat[][] arraySeat2 = new Seat [20][6];
+        Seat[][] arraySeat3 = new Seat [20][6];
         
         for (int i = 0;i < 20;i++){
             
@@ -30,11 +32,11 @@ public class FlightReservationSystem {
                 
                 if(i<= 5){
                     
-                    arraySeat[i][j] = new FirstClass(0);
+                    arraySeat1[i][j] = new FirstClass(0);
   
                 }else{
                         
-                    arraySeat[i][j] = new EconomicClass(0);
+                    arraySeat1[i][j] = new EconomicClass(0);
                         
                 }
                 
@@ -42,17 +44,63 @@ public class FlightReservationSystem {
             }
             
         }
+        
+        for (int i = 0;i < 20;i++){
+            
+            for (int j = 0;j < 6;j++){
+                
+                if(i<= 5){
+                    
+                    arraySeat2[i][j] = new FirstClass(0);
+  
+                }else{
+                        
+                    arraySeat2[i][j] = new EconomicClass(0);
+                        
+                }
+                
+                
+            }
+            
+        }
+        
+        for (int i = 0;i < 20;i++){
+            
+            for (int j = 0;j < 6;j++){
+                
+                if(i<= 5){
+                    
+                    arraySeat3[i][j] = new FirstClass(0);
+  
+                }else{
+                        
+                    arraySeat3[i][j] = new EconomicClass(0);
+                        
+                }
+                
+                
+            }
+            
+        }
+        
         //inicializing Flight1
-        Flight newFlight = new Flight("010", "01", "São Paulo", "25/05/2018",arraySeat);
+        Flight flight1 = new Flight("010", "01", "São Paulo", "25/05/2018", "03:45", arraySeat1);
+        Flight flight2 = new Flight("053", "02", "Recife", "27/05/2018", "15:30", arraySeat2);
+        Flight flight3 = new Flight("130", "03", "Londres", "02/06/2018", "21:57", arraySeat3);
+        
+        Flight newFlight = flight1;
         
         ArrayList<Flight> arrayFlight = new ArrayList();
 
-        arrayFlight.add(newFlight);
+        arrayFlight.add(flight1);
+        arrayFlight.add(flight2);
+        arrayFlight.add(flight3);
         
         ArrayList<User> arrayUser = new ArrayList();
         
         int menuLogin = 100;
         int menuOptions = 100;
+        int menuFlight = 100;
         
         int row;
         
@@ -92,6 +140,7 @@ public class FlightReservationSystem {
                         if(PasswordLogin.equals(i.getPassword())){
                             
                             System.out.println("Your are in!");
+                            
                             FlightReservationSystem.Logado = i;
                             
                             menuOptions = 100;
@@ -117,7 +166,22 @@ public class FlightReservationSystem {
                                     
                                 } else if(menuOptions == 2){
                                     
+                                    for (int j = 0;j < arrayFlight.size();j++){
+                                        
+                                        System.out.printf("\n%d - ", j);
+                                        arrayFlight.get(j).printFlight();
+                                        
+                                    }
+                                    
+                                    System.out.println("\nPlease, inform your flight. Ex: '1'\n");
+                                    
+                                    menuFlight = input.nextInt();
+                                    
+                                    newFlight = arrayFlight.get(menuFlight);
+                                    
                                     if (Logado.getSeat() == null){
+                                        
+                                        newFlight.printFlight();
                                         
                                         newFlight.seatMap();
 
@@ -129,7 +193,7 @@ public class FlightReservationSystem {
 
                                         col = input.next();
 
-                                        newFlight.reservation(arraySeat, row, col, FlightReservationSystem.Logado);
+                                        newFlight.reservation(newFlight.getArraySeat(), row, col, FlightReservationSystem.Logado);
 
                                         newFlight.seatMap();
 
@@ -147,7 +211,7 @@ public class FlightReservationSystem {
                                     
                                     if (Logado.getSeat() != null){
                                         
-                                        newFlight.buy(arraySeat, Logado);   
+                                        newFlight.buy(newFlight.getArraySeat(), Logado);   
                                         
                                     } else {
                                         
@@ -169,11 +233,11 @@ public class FlightReservationSystem {
                                     
                                     if (Logado.getSeat().getOcupied() == 1){
                                         
-                                        newFlight.realocateReservation(arraySeat, Logado, row, col);
+                                        newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
                                         
                                     } else if (Logado.getSeat().getOcupied() == 2){
                                         
-                                        newFlight.realocatePurchase(arraySeat, Logado, row, col);
+                                        newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
                                         
                                     }
                                      
@@ -181,7 +245,7 @@ public class FlightReservationSystem {
                                     
                                 } else if(menuOptions == 5){
                                     
-                                    newFlight.cancel(arraySeat, Logado);
+                                    newFlight.cancel(newFlight.getArraySeat(), Logado);
                                     
                                     menuOptions = 100;
                                     

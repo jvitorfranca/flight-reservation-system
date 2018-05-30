@@ -16,14 +16,16 @@ public class Flight {
     private String gate;
     private String destination;
     private String date;
+    private String hour;
     private Seat arraySeat[][] = new Seat [20][6];  
     
-    Flight(String ID, String gate, String destination, String date, Seat arraySeat[][]){
+    Flight(String ID, String gate, String destination, String date, String hour, Seat arraySeat[][]){
         
         this.ID = ID;
         this.gate = gate;
         this.destination = destination;
         this.date = date;
+        this.hour = hour;
         this.arraySeat = arraySeat;
         
     }
@@ -168,7 +170,7 @@ public class Flight {
     
     public void realocatePurchase(Seat arraySeat[][], User Logado, int row, String col){
         
-       Seat OldSeat = Logado.getSeat();
+       Seat oldSeat = Logado.getSeat();
        
        Seat reserved = reservation(arraySeat, row, col, Logado);
        
@@ -178,7 +180,7 @@ public class Flight {
                
                 //arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
                 
-                OldSeat.setOcupied(0);
+                oldSeat.setOcupied(0);
                 
                 buy(arraySeat,Logado);
                 
@@ -200,6 +202,18 @@ public class Flight {
         Logado.setSeat(null, -1, -1);
         
         System.out.println("Cancelation successful");
+        
+    }
+    
+    public void printFlight(){
+        
+        System.out.printf("%s - %s\n", this.destination, this.hour);
+        
+    }
+    
+    public Seat[][] getArraySeat(){
+        
+        return this.arraySeat;
         
     }
     
