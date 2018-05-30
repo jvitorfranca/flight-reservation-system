@@ -168,6 +168,7 @@ public class Flight {
     
     public void realocatePurchase(Seat arraySeat[][], User Logado, int row, String col){
         
+       Seat OldSeat = Logado.getSeat();
        
        Seat reserved = reservation(arraySeat, row, col, Logado);
        
@@ -175,9 +176,9 @@ public class Flight {
            
            if(reserved.getOcupied() != 2){
                
-                arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+                //arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
                 
-                Logado.setSeat(null, -1, -1);
+                OldSeat.setOcupied(0);
                 
                 buy(arraySeat,Logado);
                 
