@@ -59,9 +59,15 @@ public class User {
         
     }
     
-    public void getSeat(){ 
+    public void printSeat(){ 
         
         System.out.println("Seat: " + row  + " " + col);
+        
+    }
+    
+    public Seat getSeat(){
+        
+        return this.yourSeat;
         
     }
     
@@ -75,6 +81,12 @@ public class User {
   
         return this.col;
         
+    }
+    
+    public double getPrice(){
+        
+        double result = 0;
+        return result;
     }
     
 }

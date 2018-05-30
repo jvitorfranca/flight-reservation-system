@@ -5,6 +5,7 @@
  */
 package flightreservationsystem;
 
+
 /**
  *
  * @author vitorfranca
@@ -61,53 +62,143 @@ public class Flight {
     
     }
     
-    public void reservation(Seat arraySeat[][], int row, String col, User Logado){
+    public Seat reservation(Seat arraySeat[][], int row, String col, User Logado){
+                
         
         if (col.equalsIgnoreCase("A")){
             
-            arraySeat[row - 1][1 - 1].setOcupied(1);
-            
-            Logado.setSeat(arraySeat[row - 1][1 - 1], row, 1);
+            if(arraySeat[row - 1][1 - 1].getOcupied() == 0){
+                arraySeat[row - 1][1 - 1].setOcupied(1);
+
+                Logado.setSeat(arraySeat[row - 1][1 - 1], row, 1);
+                
+                return arraySeat[row - 1][1 - 1];
+                
+            }
             
         } else if (col.equalsIgnoreCase("B")){
             
-            arraySeat[row - 1][2 - 1].setOcupied(1);
-            
-            Logado.setSeat(arraySeat[row - 1][2 - 1], row, 2);
+            if(arraySeat[row - 1][2 - 1].getOcupied() == 0){
+                
+                arraySeat[row - 1][2 - 1].setOcupied(1);
+
+                Logado.setSeat(arraySeat[row - 1][2 - 1], row, 2);
+                
+                
+                return arraySeat[row - 1][2 - 1];
+                
+            }
             
         } else if (col.equalsIgnoreCase("C")){
             
-            arraySeat[row - 1][3 - 1].setOcupied(1);
+            if(arraySeat[row - 1][3 - 1].getOcupied() == 0){
             
-            Logado.setSeat(arraySeat[row - 1][3 - 1], row, 3);
+                arraySeat[row - 1][3 - 1].setOcupied(1);
+
+                Logado.setSeat(arraySeat[row - 1][3 - 1], row, 3);
+                
+                return arraySeat[row - 1][3 - 1];
+                
+            }
             
         } else if (col.equalsIgnoreCase("D")){
             
-            arraySeat[row - 1][4 - 1].setOcupied(1);
+            if(arraySeat[row - 1][4 - 1].getOcupied() == 0){
             
-            Logado.setSeat(arraySeat[row - 1][4 - 1], row, 4);
+                arraySeat[row - 1][4 - 1].setOcupied(1);
+
+                Logado.setSeat(arraySeat[row - 1][4 - 1], row, 4);
+                
+                return arraySeat[row - 1][4 - 1];
+                
+            }
             
         } else if (col.equalsIgnoreCase("E")){
             
-            arraySeat[row - 1][5 - 1].setOcupied(1);
+            if(arraySeat[row - 1][5 - 1].getOcupied() == 0){
             
-            Logado.setSeat(arraySeat[row - 1][5 - 1], row, 5);
+                arraySeat[row - 1][5 - 1].setOcupied(1);
+
+                Logado.setSeat(arraySeat[row - 1][5 - 1], row, 5);
+                
+                return arraySeat[row - 1][5 - 1];
+            
+            }
+            
             
         } else if (col.equalsIgnoreCase("F")){
             
-            arraySeat[row - 1][6 - 1].setOcupied(1);
+            if(arraySeat[row - 1][6 - 1].getOcupied() == 0){
             
-            Logado.setSeat(arraySeat[row - 1][6 - 1], row, 6);
+                arraySeat[row - 1][6 - 1].setOcupied(1);
+
+                Logado.setSeat(arraySeat[row - 1][6 - 1], row, 6);
+                
+                return arraySeat[row - 1][6 - 1];
+            
+            }
             
         }
+        
+        return null;
         
     }
     
     public void buy(Seat arraySeat[][], User Logado){
         
-        arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(2);
+        if(arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].getOcupied() != 2){
+        
+            arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(2);
+        
+        }
         
         System.out.println("Purchase successful");
+        
+    }
+    
+    public void realocateReservation(Seat arraySeat[][], User Logado, int row, String col){
+        
+       arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+        
+       Logado.setSeat(null, -1, -1); 
+        
+       reservation(arraySeat, row, col, Logado);
+       
+    }
+    
+    public void realocatePurchase(Seat arraySeat[][], User Logado, int row, String col){
+        
+       
+       Seat reserved = reservation(arraySeat, row, col, Logado);
+       
+       if(reserved != null){
+           
+           if(reserved.getOcupied() != 2){
+               
+                arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+                
+                Logado.setSeat(null, -1, -1);
+                
+                buy(arraySeat,Logado);
+                
+           }
+           
+       }else{
+           
+           System.out.println("Something went wrong!");
+           
+       }
+       
+    }
+    
+    public void cancel(Seat arraySeat[][], User Logado){
+        
+        
+        arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+        
+        Logado.setSeat(null, -1, -1);
+        
+        System.out.println("Cancelation successful");
         
     }
     

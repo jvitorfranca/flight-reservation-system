@@ -9,29 +9,21 @@ package flightreservationsystem;
  *
  * @author vitorfranca
  */
-public class Seat{
-    
-    
-    private int ocupied;
+public class EconomicClass extends Seat {
 
-    Seat(int ocupied){
-    
-        this.ocupied = ocupied;
-    
+    public EconomicClass(int ocupied) {
+        super(ocupied);
     }
     
     
     
-    public void setOcupied(int ocupied){
-       
-        this.ocupied = ocupied;
-    
-    }
-    
-    public int getOcupied(){
-    
-        return this.ocupied;
-    
-    }
+    public double getPrice(){
         
+        double result;
+        
+        result = 400;
+        
+        return result;
+    }
+    
 }
