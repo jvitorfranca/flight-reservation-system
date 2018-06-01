@@ -117,8 +117,10 @@ public class FlightReservationSystem {
         
         while(menuLogin == 100 && menuOptions <= 105){
             
-            System.out.println("1- Log In");
-            System.out.println("2- Sign Up");
+            System.out.println("====================");
+            System.out.println("=   1- Log In      =");
+            System.out.println("=   2- Sign Up     =");
+            System.out.println("====================");
             
             menuLogin = input.nextInt();
             
@@ -139,7 +141,7 @@ public class FlightReservationSystem {
                         
                         if(PasswordLogin.equals(i.getPassword())){
                             
-                            System.out.println("Your are in!");
+                            System.out.println("\nYour are in!");
                             
                             FlightReservationSystem.Logado = i;
                             
@@ -149,16 +151,31 @@ public class FlightReservationSystem {
                                 
                                 menuOptions = 99;
                                 
-                                System.out.println("1- Consult");
-                                System.out.println("2- Reservate");
-                                System.out.println("3- Buy");
-                                System.out.println("4- Realocate");
-                                System.out.println("5- Cancel");
-                                System.out.println("6- Log Out");
+                                System.out.println("====================");
+                                System.out.println("=   1- Consult     =");
+                                System.out.println("=   2- Reservate   =");
+                                System.out.println("=   3- Buy         =");
+                                System.out.println("=   4- Realocate   =");
+                                System.out.println("=   5- Cancel      =");
+                                System.out.println("=   6- Log Out     =");
+                                System.out.println("====================");
                                 
                                 menuOptions = input.nextInt();
                                 
                                 if(menuOptions == 1){
+                                    
+                                    for (int j = 0;j < arrayFlight.size();j++){
+                                        
+                                        System.out.printf("\n%d - ", j);
+                                        arrayFlight.get(j).printFlight();
+                                        
+                                    }
+                                    
+                                    System.out.println("\nPlease, inform your flight. Ex: '1'");
+                                    
+                                    menuFlight = input.nextInt();
+                                    
+                                    newFlight = arrayFlight.get(menuFlight);
                                     
                                     newFlight.seatMap();
                                     
@@ -185,11 +202,11 @@ public class FlightReservationSystem {
                                         
                                         newFlight.seatMap();
 
-                                        System.out.println("Insert the row of your seat. Ex: 20 ");
+                                        System.out.println("\nInsert the row of your seat. Ex: 20 ");
 
                                         row = input.nextInt();
 
-                                        System.out.println("Insert the collumn of your seat. Ex: C ");
+                                        System.out.println("\nInsert the collumn of your seat. Ex: C ");
 
                                         col = input.next();
 
@@ -201,7 +218,7 @@ public class FlightReservationSystem {
                                         
                                     } else {
                                         
-                                        System.out.println("Sorry, but you can reserve just one seat");
+                                        System.out.println("\nSorry, but you can reserve just one seat");
                                         
                                     }
 
@@ -211,11 +228,13 @@ public class FlightReservationSystem {
                                     
                                     if (Logado.getSeat() != null){
                                         
-                                        newFlight.buy(newFlight.getArraySeat(), Logado);   
+                                        newFlight.buy(newFlight.getArraySeat(), Logado);  
+                                        
+                                        newFlight.seatMap();
                                         
                                     } else {
                                         
-                                        System.out.println("You must reserve first");
+                                        System.out.println("\nYou must reserve first");
                                         
                                     }
                                     
@@ -223,11 +242,11 @@ public class FlightReservationSystem {
                                     
                                 } else if(menuOptions == 4){
                                     
-                                    System.out.println("Insert the row of your new seat. Ex: 20 ");
+                                    System.out.println("\nInsert the row of your new seat. Ex: 20 ");
 
                                     row = input.nextInt();
 
-                                    System.out.println("Insert the collumn of new your seat. Ex: C ");
+                                    System.out.println("\nInsert the collumn of new your seat. Ex: C ");
 
                                     col = input.next();
                                     
@@ -259,13 +278,13 @@ public class FlightReservationSystem {
                             }
                         }else{
                             
-                            System.out.println("Incorrect Password");
+                            System.out.println("\nIncorrect Password");
                         
                         }
                         
                     }else{
                         
-                        System.out.println("Incorrect Email");
+                        System.out.println("\nIncorrect Email");
                     
                     }
                 }
@@ -293,7 +312,7 @@ public class FlightReservationSystem {
                     
                     while(email.equals(i.getEmail())){
                         
-                        System.out.println("This email is already in use! Use another");
+                        System.out.println("\nThis email is already in use! Use another");
                         
                         email = input.next();
                     }
