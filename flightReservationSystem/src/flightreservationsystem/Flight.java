@@ -76,6 +76,10 @@ public class Flight {
                 
                 return arraySeat[row - 1][1 - 1];
                 
+            }else{
+                
+                System.out.println("This seat is already reserved");
+                
             }
             
         } else if (col.equalsIgnoreCase("B")){
@@ -89,6 +93,10 @@ public class Flight {
                 
                 return arraySeat[row - 1][2 - 1];
                 
+            }else{
+                
+                System.out.println("This seat is already reserved");
+                
             }
             
         } else if (col.equalsIgnoreCase("C")){
@@ -100,6 +108,10 @@ public class Flight {
                 Logado.setSeat(arraySeat[row - 1][3 - 1], row, 3);
                 
                 return arraySeat[row - 1][3 - 1];
+                
+            }else{
+                
+                System.out.println("This seat is already reserved");
                 
             }
             
@@ -113,6 +125,10 @@ public class Flight {
                 
                 return arraySeat[row - 1][4 - 1];
                 
+            }else{
+                
+                System.out.println("This seat is already reserved");
+                
             }
             
         } else if (col.equalsIgnoreCase("E")){
@@ -125,6 +141,10 @@ public class Flight {
                 
                 return arraySeat[row - 1][5 - 1];
             
+            }else{
+                
+                System.out.println("This seat is already reserved");
+                
             }
             
             
@@ -138,6 +158,10 @@ public class Flight {
                 
                 return arraySeat[row - 1][6 - 1];
             
+            }else{
+                
+                System.out.println("This seat is already reserved");
+                
             }
             
         }
@@ -158,17 +182,21 @@ public class Flight {
         
     }
     
-    public void realocateReservation(Seat arraySeat[][], User Logado, int row, String col){
+    public Seat realocateReservation(Seat arraySeat[][], User Logado, int row, String col){
+       
+       Seat seat; 
         
        arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
         
        Logado.setSeat(null, -1, -1); 
         
-       reservation(arraySeat, row, col, Logado);
+       seat = reservation(arraySeat, row, col, Logado);
+     
+       return seat;
        
     }
     
-    public void realocatePurchase(Seat arraySeat[][], User Logado, int row, String col){
+    public Seat realocatePurchase(Seat arraySeat[][], User Logado, int row, String col){
         
        Seat oldSeat = Logado.getSeat();
        
@@ -184,6 +212,8 @@ public class Flight {
                 
                 buy(arraySeat,Logado);
                 
+                return reserved;
+                
            }
            
        }else{
@@ -191,6 +221,8 @@ public class Flight {
            System.out.println("Something went wrong!");
            
        }
+       
+       return null;
        
     }
     
@@ -214,6 +246,30 @@ public class Flight {
     public Seat[][] getArraySeat(){
         
         return this.arraySeat;
+        
+    }
+    
+    public void printBoardingCard(User Logado){
+        
+        String status = "Free";
+        if(Logado.getSeat() != null){
+            
+            if(Logado.getSeat().getOcupied() == 1){
+                
+                status = "Reserved";
+                
+            }else if( Logado.getSeat().getOcupied() == 2){
+                
+                status = "Bought";
+                
+            }
+            
+            System.out.println("ID: " + this.ID + "|| Destination: " + this.destination +"|| Date:" + this.date +"|| Gate:" + this.gate +"|| Hour:" + this.hour+
+                    "|| Seat: " + Logado.getRow()+ " " + Logado.getCol() + "|| Status: "+ status );
+        }else{
+            
+            System.out.println("Something went wrong");
+        }
         
     }
     

@@ -13,17 +13,19 @@ public class EconomicClass extends Seat {
 
     public EconomicClass(int ocupied) {
         super(ocupied);
+        setPrice();
     }
     
-    
+    public void setPrice(){
+        
+        price = 400;
+        
+    }
     
     public double getPrice(){
         
-        double result;
+        return price;
         
-        result = 400;
-        
-        return result;
     }
     
 }

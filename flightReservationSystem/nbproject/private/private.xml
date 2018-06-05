@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jvitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/FlightReservationSystem.java</file>
-            <file>file:/home/jvitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/Flight.java</file>
-            <file>file:/home/jvitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/Seat.java</file>
-            <file>file:/home/jvitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/Reservation.java</file>
-            <file>file:/home/jvitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/User.java</file>
+            <file>file:/home/vitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/FlightReservationSystem.java</file>
+            <file>file:/home/vitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/Reservation.java</file>
+            <file>file:/home/vitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/FirstClass.java</file>
+            <file>file:/home/vitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/EconomicClass.java</file>
+            <file>file:/home/vitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/User.java</file>
+            <file>file:/home/vitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/Seat.java</file>
+            <file>file:/home/vitorfranca/git/flight-reservation-system/flightReservationSystem/src/flightreservationsystem/Flight.java</file>
         </group>
     </open-files>
 </project-private>

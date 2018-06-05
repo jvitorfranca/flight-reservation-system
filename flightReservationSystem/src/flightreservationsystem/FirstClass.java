@@ -13,16 +13,19 @@ public class FirstClass extends Seat{
 
     public FirstClass(int ocupied) {
         super(ocupied);
+        setPrice();
     }
     
-    
+    public void setPrice(){
+        
+        price = 1000;
+        
+    }
     
     public double getPrice(){
         
-        double result;
-        result = 1000;
+        return price;
         
-        return result;
     }
     
 }
