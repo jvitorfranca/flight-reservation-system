@@ -229,12 +229,17 @@ public class Flight {
     public void cancel(Seat arraySeat[][], User Logado){
         
         
-        arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
-        
-        Logado.setSeat(null, -1, -1);
-        
-        System.out.println("Cancelation successful");
-        
+            if(Logado.getCol() > -1 && Logado.getRow() > -1){
+                arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+
+                Logado.setSeat(null, -1, -1);
+
+                System.out.println("Cancelation successful");
+            }else{
+                
+                System.out.println("Cancelation Fail");
+                
+            }
     }
     
     public void printFlight(){
@@ -252,6 +257,7 @@ public class Flight {
     public void printBoardingCard(User Logado){
         
         String status = "Free";
+        String ColString = "";
         if(Logado.getSeat() != null){
             
             if(Logado.getSeat().getOcupied() == 1){
@@ -264,8 +270,37 @@ public class Flight {
                 
             }
             
-            System.out.println("ID: " + this.ID + "|| Destination: " + this.destination +"|| Date:" + this.date +"|| Gate:" + this.gate +"|| Hour:" + this.hour+
-                    "|| Seat: " + Logado.getRow()+ " " + Logado.getCol() + "|| Status: "+ status );
+            if (Logado.getCol() == 1){
+                
+                ColString = "A";
+            
+            } else if (Logado.getCol() == 2){
+                
+                ColString = "B";
+
+            } else if (Logado.getCol() == 3){
+                
+                ColString = "C";
+
+            } else if (Logado.getCol() == 4){
+                
+                ColString = "D";
+
+            } else if (Logado.getCol() == 5){
+                
+                ColString = "E";
+
+            } else if (Logado.getCol() == 6){
+                
+                ColString = "F";
+
+            }
+            
+            
+            
+            
+            System.out.println("||ID: " + this.ID + "|| Destination: " + this.destination +"\n\n|| Date:" + this.date +"|| Gate:" + this.gate +"|| Hour:" + this.hour+
+                    "\n\n|| Seat: " + Logado.getRow()+ ColString + "|| Status: "+ status );
         }else{
             
             System.out.println("Something went wrong");

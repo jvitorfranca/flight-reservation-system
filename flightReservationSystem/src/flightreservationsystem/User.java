@@ -29,7 +29,13 @@ public class User {
         this.password = password;
         this.cellphone = cellphone;
         this.credit_card = credit_card;
+        row = -1;
+        col = -1;
         
+    }
+    
+    public String getName(){
+        return name;
     }
     
     public String getEmail(){

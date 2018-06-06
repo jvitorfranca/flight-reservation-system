@@ -100,9 +100,9 @@ public class FlightReservationSystem {
         
         //Initializing Admins
         
-        User Admin1 = new User("leo","123","123","123",123,123);
-        User Admin2 = new User("vitoor","456","456","456",456,456);
-        User Admin3 = new User("jessica","789","789","789",789,789);
+        User Admin1 = new User("Leonardo","123","123","123",123,123);
+        User Admin2 = new User("Vitor","456","456","456",456,456);
+        User Admin3 = new User("Jéssica","789","789","789",789,789);
         
         arrayUser.add(Admin3);
         arrayUser.add(Admin2);
@@ -153,9 +153,11 @@ public class FlightReservationSystem {
                         
                         if(PasswordLogin.equals(i.getPassword())){
                             
-                            System.out.println("\nYour are in!");
-                            
                             FlightReservationSystem.Logado = i;
+                            
+                            System.out.println("\nHello, " + Logado.getName() + "!");
+                            
+                            System.out.println("\nWhat do you want to do now?");
                             
                             menuOptions = 100;
                             
@@ -207,9 +209,10 @@ public class FlightReservationSystem {
                                     
                                     menuFlight = input.nextInt();
                                     
-                                    newFlight = arrayFlight.get(menuFlight);
-                                    
-                                    if (Logado.getSeat() == null){
+                                    if(menuFlight < 3 ){
+                                        newFlight = arrayFlight.get(menuFlight);
+                                        
+                                        if (Logado.getSeat() == null){
                                         
                                         newFlight.printFlight();
                                         
@@ -241,7 +244,7 @@ public class FlightReservationSystem {
                                                 
                                                 if(seat != null){
                                                     
-                                                     System.out.println(seat.getPrice());
+                                                     System.out.println("This seat will cost " + seat.getPrice() + " U$");
 
                                                 }
                                                 
@@ -269,7 +272,7 @@ public class FlightReservationSystem {
                                                 
                                                 if(seat != null){
                                                     
-                                                     System.out.println(seat.getPrice());
+                                                     System.out.println("This seat will cost " + seat.getPrice() + " U$");
 
                                                 }
                                                 
@@ -289,6 +292,13 @@ public class FlightReservationSystem {
                                         System.out.println("\nSorry, but you can reserve just one seat");
                                         
                                     }
+                                    }else{
+                                        menuOptions = 100;
+                                        
+                                    }
+                                    
+                                    
+                                    
 
                                     menuOptions = 100;
                                     
@@ -334,7 +344,7 @@ public class FlightReservationSystem {
 
                                                     if(seat != null){
                                                     
-                                                     System.out.println(seat.getPrice());
+                                                     System.out.println("This seat will cost " + seat.getPrice() + " U$");
 
                                                     }
 
@@ -344,7 +354,7 @@ public class FlightReservationSystem {
 
                                                     if(seat != null){
                                                     
-                                                     System.out.println(seat.getPrice());
+                                                     System.out.println("This seat will cost " + seat.getPrice() + " U$");
 
                                                     }
 
@@ -368,13 +378,13 @@ public class FlightReservationSystem {
 
                                                     seat = newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
 
-                                                    System.out.println(seat.getPrice());
+                                                    System.out.println("This seat will cost " + seat.getPrice() + " U$");
 
                                                 } else if (Logado.getSeat().getOcupied() == 2){
 
                                                     seat = newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
 
-                                                    System.out.println(seat.getPrice());
+                                                    System.out.println("This seat will cost " + seat.getPrice() + " U$");
 
                                                 }
                                            } else {
@@ -404,6 +414,10 @@ public class FlightReservationSystem {
                                     
                                     menuOptions = 90;
                                     
+                                }else{
+                                    
+                                    menuOptions = 100;
+                                    System.out.println("Please choose one of the options below");
                                 }
                             }
                         }else{
