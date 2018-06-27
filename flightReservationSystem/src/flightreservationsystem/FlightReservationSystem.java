@@ -5,8 +5,17 @@
  */
 package flightreservationsystem;
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.bson.Document;
 
 /**
  *
@@ -18,8 +27,36 @@ public class FlightReservationSystem {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         
+        Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
+        mongoLogger.setLevel(Level.SEVERE); 
+        
+        try {
+        
+            MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+            
+            MongoDatabase database = mongoClient.getDatabase("SystemDB");
+
+            MongoCollection collection = database.getCollection("User");
+            
+            Document document = new Document("Name","Vitor");  
+            document.append("E-mail", "vitoorbr@gmail.com");
+            document.append("CPF", "1234567");
+            document.append("Credit Card", "1234567");
+            
+            collection.insertOne(document);
+            
+            System.out.println("Connected to Database");
+            
+        
+        } catch (Exception e){
+        
+            System.out.println(e);
+        
+        }
+        
+        System.out.println("Server is ready");
         
         //inicializing Seats
         Seat[][] arraySeat1 = new Seat [20][6];
