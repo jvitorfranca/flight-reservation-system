@@ -5,6 +5,9 @@
  */
 package flightreservationsystem;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 /**
  *
  * @author vitorfranca
@@ -43,6 +46,22 @@ public class User {
     }
     public String getPassword(){
         return password;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public Seat getYourSeat() {
+        return yourSeat;
+    }
+
+    public long getCellphone() {
+        return cellphone;
+    }
+
+    public long getCredit_card() {
+        return credit_card;
     }
     
     private void Reservate(Flight newFlight){
@@ -93,6 +112,12 @@ public class User {
         
         double result = 0;
         return result;
+    }
+    
+    public static DBObject toDBObject(User user){
+        
+        return new BasicDBObject("Name", user.getName()).append("Cpf", user.getCpf()).append("E-mail", user.getEmail()).append("Password", user.getPassword()).append("Cellphone", user.getCellphone()).append("Credit card", user.getCredit_card());
+        
     }
     
 }

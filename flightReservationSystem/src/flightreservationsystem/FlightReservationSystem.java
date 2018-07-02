@@ -5,6 +5,11 @@
  */
 package flightreservationsystem;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -36,13 +41,11 @@ public class FlightReservationSystem {
         
             MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
             
-            MongoDatabase database = mongoClient.getDatabase("SystemDB");
+            DB database = mongoClient.getDB("SystemDB");
             
             System.out.println("Connected to Database");
         
-            MongoCollection collection = database.getCollection("User");
-
-            Document document = new Document(); 
+            DBCollection collection = database.getCollection("User");
             
             //inicializing Seats
             Seat[][] arraySeat1 = new Seat [20][6];
@@ -169,292 +172,300 @@ public class FlightReservationSystem {
                     System.out.println("Password: ");
 
                     String PasswordLogin = input.next();
-
-                    for(User i: arrayUser){
-
-                        if(emailLogin.equals(i.getEmail())){
-
-                            if(PasswordLogin.equals(i.getPassword())){
-
-                                FlightReservationSystem.Logado = i;
-
-                                System.out.println("\nHello, " + Logado.getName() + "!");
-
-                                System.out.println("\nWhat do you want to do now?");
-
-                                menuOptions = 100;
-
-                                while(menuOptions == 100){
-
-                                    menuOptions = 99;
-
-                                    System.out.println("=========================");
-                                    System.out.println("=   1- Consult          =");
-                                    System.out.println("=   2- Reservate        =");
-                                    System.out.println("=   3- Buy              =");
-                                    System.out.println("=   4- Realocate        =");
-                                    System.out.println("=   5- Cancel           =");
-                                    System.out.println("=   6- Boarding Card    =");
-                                    System.out.println("=   7- Log Out          =");
-                                    System.out.println("=========================");
-
-                                    menuOptions = input.nextInt();
-
-                                    if(menuOptions == 1){
-
-                                        for (int j = 0;j < arrayFlight.size();j++){
-
-                                            System.out.printf("\n%d - ", j);
-                                            arrayFlight.get(j).printFlight();
-
-                                        }
-
-                                        System.out.println("\nPlease, inform your flight. Ex: '1'");
-
-                                        menuFlight = input.nextInt();
-
-                                        newFlight = arrayFlight.get(menuFlight);
-
-                                        newFlight.seatMap();
-
-                                        menuOptions = 100;
-
-                                    } else if(menuOptions == 2){
-
-                                        for (int j = 0;j < arrayFlight.size();j++){
-
-                                            System.out.printf("\n%d - ", j);
-                                            arrayFlight.get(j).printFlight();
-
-                                        }
-
-                                        System.out.println("\nPlease, inform your flight. Ex: '1'\n");
-
-                                        menuFlight = input.nextInt();
-
-                                        if(menuFlight < 3 ){
-                                            newFlight = arrayFlight.get(menuFlight);
-
-                                            if (Logado.getSeat() == null){
-
-                                            newFlight.printFlight();
-
-                                            newFlight.seatMap();
-
-                                            System.out.println("\nInsert the row of your seat. Ex: 20 ");
-
-                                            row = input.nextInt();
-
-                                            System.out.println("\nInsert the collumn of your seat. Ex: C ");
-
-                                            col = input.next();
-
-                                            if (row <= 6){
-
-                                                String decision;
-
-                                                System.out.println("\nThis is a first class seat. Do you want to reserve it? [Y/N]");
-
-                                                decision = input.next();
-
-                                                if (decision.equalsIgnoreCase("Y")){
-
-                                                    seat = (FirstClass)newFlight.reservation(newFlight.getArraySeat(), row, col, FlightReservationSystem.Logado);
-
-                                                    newFlight.seatMap();
-
-                                                    Logado.getSeat();
-
-                                                    if(seat != null){
-
-                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-
-                                                    }
-
-                                                } else {
-
-                                                    menuOptions = 2;
-
-                                                }
-
-                                            } else {
-
-                                                String decision;
-
-                                                System.out.println("\nThis is a economic class seat. Do you want to reserve it? [Y/N]");
-
-                                                decision = input.next();
-
-                                                if (decision.equalsIgnoreCase("Y")){
-
-                                                    seat = (EconomicClass)newFlight.reservation(newFlight.getArraySeat(), row, col, FlightReservationSystem.Logado);
-
-                                                    newFlight.seatMap();
-
-                                                    Logado.getSeat();
-
-                                                    if(seat != null){
-
-                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-
-                                                    }
-
-                                                } else {
-
-                                                    menuOptions = 2;
-
-                                                }
-
-                                            }
-
-
-                                            Logado.getSeat(); 
-
-                                        } else {
-
-                                            System.out.println("\nSorry, but you can reserve just one seat");
-
-                                        }
-                                        }else{
-                                            menuOptions = 100;
-
-                                        }
-
-
-
-
-                                        menuOptions = 100;
-
-                                    } else if(menuOptions == 3){
-
-                                        if (Logado.getSeat() != null){
-
-                                            newFlight.buy(newFlight.getArraySeat(), Logado);  
-
-                                            newFlight.seatMap();
-
-                                        } else {
-
-                                            System.out.println("\nYou must reserve first");
-
-                                        }
-
-                                        menuOptions = 100;
-
-                                    } else if(menuOptions == 4){
-
-                                        System.out.println("\nInsert the row of your new seat. Ex: 20 ");
-
-                                        row = input.nextInt();
-
-                                        System.out.println("\nInsert the collumn of new your seat. Ex: C ");
-
-                                        col = input.next();
-
-                                        if (row <= 6){
-
-                                               String decision;
-
-                                               System.out.println("\nThis is a first class seat. Do you want to realocate2 it? [Y/N]");
-
-                                               decision = input.next();
-
-                                               if (decision.equalsIgnoreCase("Y")){
-
-                                                    if (Logado.getSeat().getOcupied() == 1){
-
-                                                        seat = newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
-
-                                                        if(seat != null){
-
-                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-
-                                                        }
-
-                                                    } else if (Logado.getSeat().getOcupied() == 2){
-
-                                                        seat = newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
-
-                                                        if(seat != null){
-
-                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-
-                                                        }
-
-                                                    }
-                                               } else {
-
-                                                   menuOptions = 4;
-
-                                               }
-                                        } else {
-
-                                            String decision;
-
-                                               System.out.println("\nThis is a economic class seat. Do you want to realocate it? [Y/N]");
-
-                                               decision = input.next();
-
-                                               if (decision.equalsIgnoreCase("Y")){
-
-                                                    if (Logado.getSeat().getOcupied() == 1){
-
-                                                        seat = newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
-
-                                                        System.out.println("This seat will cost " + seat.getPrice() + " U$");
-
-                                                    } else if (Logado.getSeat().getOcupied() == 2){
-
-                                                        seat = newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
-
-                                                        System.out.println("This seat will cost " + seat.getPrice() + " U$");
-
-                                                    }
-                                               } else {
-
-                                                   menuOptions = 4;
-
-                                               }
-
-                                        }    
-                                        menuOptions = 100;
-
-                                    } else if(menuOptions == 5){
-
-                                        newFlight.cancel(newFlight.getArraySeat(), Logado);
-
-                                        menuOptions = 100;
-
-                                    }else if(menuOptions == 6){
-
-                                        newFlight.printBoardingCard(Logado);
-
-                                        menuOptions = 100;
-
-                                    } else if(menuOptions == 7){
-
-                                        FlightReservationSystem.Logado = null;
-
-                                        menuOptions = 90;
-
-                                    }else{
-
-                                        menuOptions = 100;
-                                        System.out.println("Please choose one of the options below");
-                                    }
-                                }
-                            }else{
-
-                                System.out.println("\nIncorrect Password");
-
-                            }
-
-                        }else{
-
-                            //System.out.println("\nIncorrect Email");
-
-                        }
-                    }
+                    
+                    DBObject query = new BasicDBObject("E-mail", emailLogin);
+                    
+                    DBCursor cursor = collection.find(query);
+                   
+                    //System.out.println(cursor.one().get("Name"));
+                    
+                    DBObject toUser = cursor.one();
+                    
+//                    for(User i: arrayUser){
+//
+//                        if(emailLogin.equals(i.getEmail())){
+//
+//                            if(PasswordLogin.equals(i.getPassword())){
+//
+//                                FlightReservationSystem.Logado = i;
+//
+//                                System.out.println("\nHello, " + Logado.getName() + "!");
+//
+//                                System.out.println("\nWhat do you want to do now?");
+//
+//                                menuOptions = 100;
+//
+//                                while(menuOptions == 100){
+//
+//                                    menuOptions = 99;
+//
+//                                    System.out.println("=========================");
+//                                    System.out.println("=   1- Consult          =");
+//                                    System.out.println("=   2- Reservate        =");
+//                                    System.out.println("=   3- Buy              =");
+//                                    System.out.println("=   4- Realocate        =");
+//                                    System.out.println("=   5- Cancel           =");
+//                                    System.out.println("=   6- Boarding Card    =");
+//                                    System.out.println("=   7- Log Out          =");
+//                                    System.out.println("=========================");
+//
+//                                    menuOptions = input.nextInt();
+//
+//                                    if(menuOptions == 1){
+//
+//                                        for (int j = 0;j < arrayFlight.size();j++){
+//
+//                                            System.out.printf("\n%d - ", j);
+//                                            arrayFlight.get(j).printFlight();
+//
+//                                        }
+//
+//                                        System.out.println("\nPlease, inform your flight. Ex: '1'");
+//
+//                                        menuFlight = input.nextInt();
+//
+//                                        newFlight = arrayFlight.get(menuFlight);
+//
+//                                        newFlight.seatMap();
+//
+//                                        menuOptions = 100;
+//
+//                                    } else if(menuOptions == 2){
+//
+//                                        for (int j = 0;j < arrayFlight.size();j++){
+//
+//                                            System.out.printf("\n%d - ", j);
+//                                            arrayFlight.get(j).printFlight();
+//
+//                                        }
+//
+//                                        System.out.println("\nPlease, inform your flight. Ex: '1'\n");
+//
+//                                        menuFlight = input.nextInt();
+//
+//                                        if(menuFlight < 3 ){
+//                                            newFlight = arrayFlight.get(menuFlight);
+//
+//                                            if (Logado.getSeat() == null){
+//
+//                                            newFlight.printFlight();
+//
+//                                            newFlight.seatMap();
+//
+//                                            System.out.println("\nInsert the row of your seat. Ex: 20 ");
+//
+//                                            row = input.nextInt();
+//
+//                                            System.out.println("\nInsert the collumn of your seat. Ex: C ");
+//
+//                                            col = input.next();
+//
+//                                            if (row <= 6){
+//
+//                                                String decision;
+//
+//                                                System.out.println("\nThis is a first class seat. Do you want to reserve it? [Y/N]");
+//
+//                                                decision = input.next();
+//
+//                                                if (decision.equalsIgnoreCase("Y")){
+//
+//                                                    seat = (FirstClass)newFlight.reservation(newFlight.getArraySeat(), row, col, FlightReservationSystem.Logado);
+//
+//                                                    newFlight.seatMap();
+//
+//                                                    Logado.getSeat();
+//
+//                                                    if(seat != null){
+//
+//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
+//
+//                                                    }
+//
+//                                                } else {
+//
+//                                                    menuOptions = 2;
+//
+//                                                }
+//
+//                                            } else {
+//
+//                                                String decision;
+//
+//                                                System.out.println("\nThis is a economic class seat. Do you want to reserve it? [Y/N]");
+//
+//                                                decision = input.next();
+//
+//                                                if (decision.equalsIgnoreCase("Y")){
+//
+//                                                    seat = (EconomicClass)newFlight.reservation(newFlight.getArraySeat(), row, col, FlightReservationSystem.Logado);
+//
+//                                                    newFlight.seatMap();
+//
+//                                                    Logado.getSeat();
+//
+//                                                    if(seat != null){
+//
+//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
+//
+//                                                    }
+//
+//                                                } else {
+//
+//                                                    menuOptions = 2;
+//
+//                                                }
+//
+//                                            }
+//
+//
+//                                            Logado.getSeat(); 
+//
+//                                        } else {
+//
+//                                            System.out.println("\nSorry, but you can reserve just one seat");
+//
+//                                        }
+//                                        }else{
+//                                            menuOptions = 100;
+//
+//                                        }
+//
+//
+//
+//
+//                                        menuOptions = 100;
+//
+//                                    } else if(menuOptions == 3){
+//
+//                                        if (Logado.getSeat() != null){
+//
+//                                            newFlight.buy(newFlight.getArraySeat(), Logado);  
+//
+//                                            newFlight.seatMap();
+//
+//                                        } else {
+//
+//                                            System.out.println("\nYou must reserve first");
+//
+//                                        }
+//
+//                                        menuOptions = 100;
+//
+//                                    } else if(menuOptions == 4){
+//
+//                                        System.out.println("\nInsert the row of your new seat. Ex: 20 ");
+//
+//                                        row = input.nextInt();
+//
+//                                        System.out.println("\nInsert the collumn of new your seat. Ex: C ");
+//
+//                                        col = input.next();
+//
+//                                        if (row <= 6){
+//
+//                                               String decision;
+//
+//                                               System.out.println("\nThis is a first class seat. Do you want to realocate2 it? [Y/N]");
+//
+//                                               decision = input.next();
+//
+//                                               if (decision.equalsIgnoreCase("Y")){
+//
+//                                                    if (Logado.getSeat().getOcupied() == 1){
+//
+//                                                        seat = newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
+//
+//                                                        if(seat != null){
+//
+//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
+//
+//                                                        }
+//
+//                                                    } else if (Logado.getSeat().getOcupied() == 2){
+//
+//                                                        seat = newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
+//
+//                                                        if(seat != null){
+//
+//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
+//
+//                                                        }
+//
+//                                                    }
+//                                               } else {
+//
+//                                                   menuOptions = 4;
+//
+//                                               }
+//                                        } else {
+//
+//                                            String decision;
+//
+//                                               System.out.println("\nThis is a economic class seat. Do you want to realocate it? [Y/N]");
+//
+//                                               decision = input.next();
+//
+//                                               if (decision.equalsIgnoreCase("Y")){
+//
+//                                                    if (Logado.getSeat().getOcupied() == 1){
+//
+//                                                        seat = newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
+//
+//                                                        System.out.println("This seat will cost " + seat.getPrice() + " U$");
+//
+//                                                    } else if (Logado.getSeat().getOcupied() == 2){
+//
+//                                                        seat = newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
+//
+//                                                        System.out.println("This seat will cost " + seat.getPrice() + " U$");
+//
+//                                                    }
+//                                               } else {
+//
+//                                                   menuOptions = 4;
+//
+//                                               }
+//
+//                                        }    
+//                                        menuOptions = 100;
+//
+//                                    } else if(menuOptions == 5){
+//
+//                                        newFlight.cancel(newFlight.getArraySeat(), Logado);
+//
+//                                        menuOptions = 100;
+//
+//                                    }else if(menuOptions == 6){
+//
+//                                        newFlight.printBoardingCard(Logado);
+//
+//                                        menuOptions = 100;
+//
+//                                    } else if(menuOptions == 7){
+//
+//                                        FlightReservationSystem.Logado = null;
+//
+//                                        menuOptions = 90;
+//
+//                                    }else{
+//
+//                                        menuOptions = 100;
+//                                        System.out.println("Please choose one of the options below");
+//                                    }
+//                                }
+//                            }else{
+//
+//                                System.out.println("\nIncorrect Password");
+//
+//                            }
+//
+//                        }else{
+//
+//                            //System.out.println("\nIncorrect Email");
+//
+//                        }
+//                    }
 
                     menuLogin = 100;
 
@@ -500,16 +511,11 @@ public class FlightReservationSystem {
 
                     User new_user = new User(name, cpf, email, password, cellphone, credit_card);
 
-                    Seat assento = new EconomicClass(0);
+//                    Seat assento = new EconomicClass(0);
+                    
+                    User userAdaptor = null;
 
-                    document.append("Name", name);
-                    document.append("Cpf", cpf);
-                    document.append("E-mail", email);
-                    document.append("Password", password);
-                    document.append("Cellphone", cellphone);
-                    document.append("Credit Card", credit_card);
-
-                    collection.insertOne(document);
+                    collection.insert(userAdaptor.toDBObject(new_user));
 
                     arrayUser.add(new_user);
 
