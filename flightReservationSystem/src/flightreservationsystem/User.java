@@ -63,15 +63,41 @@ public class User {
     public long getCredit_card() {
         return credit_card;
     }
-    
-    private void Reservate(Flight newFlight){
-        
-        //Access the selected Flight
-        //Show the seats
-        //Check the Class of the Passenger and limitates its access to the array
-        //Let the Passenger select a seat to be ocupied
-        
-        
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setYourSeat(Seat yourSeat) {
+        this.yourSeat = yourSeat;
+    }
+
+    public void setCellphone(long cellphone) {
+        this.cellphone = cellphone;
+    }
+
+    public void setCredit_card(long credit_card) {
+        this.credit_card = credit_card;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
     
     public void setSeat(Seat seat, int row, int col){
@@ -116,7 +142,7 @@ public class User {
     
     public static DBObject toDBObject(User user){
         
-        return new BasicDBObject("Name", user.getName()).append("Cpf", user.getCpf()).append("E-mail", user.getEmail()).append("Password", user.getPassword()).append("Cellphone", user.getCellphone()).append("Credit card", user.getCredit_card());
+        return new BasicDBObject("Name", user.getName()).append("Cpf", user.getCpf()).append("E-mail", user.getEmail()).append("Password", user.getPassword()).append("Cellphone", user.getCellphone()).append("Credit card", user.getCredit_card()).append("Seat", "00").append("RowSeat", 0).append("ColSeat", 0).append("SeatStatus", "free");
         
     }
     

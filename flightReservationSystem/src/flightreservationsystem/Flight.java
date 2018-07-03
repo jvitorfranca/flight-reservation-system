@@ -29,7 +29,26 @@ public class Flight {
         this.arraySeat = arraySeat;
         
     }
-    
+
+    public String getID() {
+        return ID;
+    }
+
+    public String getGate() {
+        return gate;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getHour() {
+        return hour;
+    }
     
     public void seatMap(){
         
@@ -64,15 +83,13 @@ public class Flight {
     
     }
     
-    public Seat reservation(Seat arraySeat[][], int row, String col, User Logado){
+    public Seat reservation(Seat arraySeat[][], int row, String col){
                 
         
         if (col.equalsIgnoreCase("A")){
             
             if(arraySeat[row - 1][1 - 1].getOcupied() == 0){
                 arraySeat[row - 1][1 - 1].setOcupied(1);
-
-                Logado.setSeat(arraySeat[row - 1][1 - 1], row, 1);
                 
                 return arraySeat[row - 1][1 - 1];
                 
@@ -87,9 +104,6 @@ public class Flight {
             if(arraySeat[row - 1][2 - 1].getOcupied() == 0){
                 
                 arraySeat[row - 1][2 - 1].setOcupied(1);
-
-                Logado.setSeat(arraySeat[row - 1][2 - 1], row, 2);
-                
                 
                 return arraySeat[row - 1][2 - 1];
                 
@@ -104,8 +118,6 @@ public class Flight {
             if(arraySeat[row - 1][3 - 1].getOcupied() == 0){
             
                 arraySeat[row - 1][3 - 1].setOcupied(1);
-
-                Logado.setSeat(arraySeat[row - 1][3 - 1], row, 3);
                 
                 return arraySeat[row - 1][3 - 1];
                 
@@ -120,8 +132,6 @@ public class Flight {
             if(arraySeat[row - 1][4 - 1].getOcupied() == 0){
             
                 arraySeat[row - 1][4 - 1].setOcupied(1);
-
-                Logado.setSeat(arraySeat[row - 1][4 - 1], row, 4);
                 
                 return arraySeat[row - 1][4 - 1];
                 
@@ -136,8 +146,6 @@ public class Flight {
             if(arraySeat[row - 1][5 - 1].getOcupied() == 0){
             
                 arraySeat[row - 1][5 - 1].setOcupied(1);
-
-                Logado.setSeat(arraySeat[row - 1][5 - 1], row, 5);
                 
                 return arraySeat[row - 1][5 - 1];
             
@@ -153,8 +161,6 @@ public class Flight {
             if(arraySeat[row - 1][6 - 1].getOcupied() == 0){
             
                 arraySeat[row - 1][6 - 1].setOcupied(1);
-
-                Logado.setSeat(arraySeat[row - 1][6 - 1], row, 6);
                 
                 return arraySeat[row - 1][6 - 1];
             
@@ -170,47 +176,96 @@ public class Flight {
         
     }
     
-    public void buy(Seat arraySeat[][], User Logado){
+    public void buy(Seat arraySeat[][], int row, int col){
         
-        if(arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].getOcupied() != 2){
+          if(arraySeat[row - 1][col - 1].getOcupied() != 2){
+                
+            arraySeat[row - 1][col - 1].setOcupied(2);
+                
+          }
         
-            arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(2);
-        
-        }
-        
-        System.out.println("Purchase successful");
+//        if (col.equalsIgnoreCase("A")){
+//            
+//            if(arraySeat[row - 1][1 - 1].getOcupied() != 2){
+//                
+//                arraySeat[row - 1][1 - 1].setOcupied(2);
+//                
+//            }
+//            
+//        } else if (col.equalsIgnoreCase("B")){
+//            
+//            if(arraySeat[row - 1][2 - 1].getOcupied() != 2){
+//                
+//                arraySeat[row - 1][2 - 1].setOcupied(2);
+//                
+//            }
+//            
+//        } else if (col.equalsIgnoreCase("C")){
+//            
+//            if(arraySeat[row - 1][3 - 1].getOcupied() != 2){
+//            
+//                arraySeat[row - 1][3 - 1].setOcupied(2);
+//                
+//            }
+//            
+//        } else if (col.equalsIgnoreCase("D")){
+//            
+//            if(arraySeat[row - 1][4 - 1].getOcupied() != 2){
+//            
+//                arraySeat[row - 1][4 - 1].setOcupied(2);
+//                
+//            }
+//            
+//        } else if (col.equalsIgnoreCase("E")){
+//            
+//            if(arraySeat[row - 1][5 - 1].getOcupied() != 2){
+//            
+//                arraySeat[row - 1][5 - 1].setOcupied(2);
+//            
+//            }
+//            
+//            
+//        } else if (col.equalsIgnoreCase("F")){
+//            
+//            if(arraySeat[row - 1][6 - 1].getOcupied() != 2){
+//            
+//                arraySeat[row - 1][6 - 1].setOcupied(2);
+//            
+//            }
+//            
+//        }
         
     }
     
-    public Seat realocateReservation(Seat arraySeat[][], User Logado, int row, String col){
+    public Seat realocateReservation(Seat arraySeat[][], int rowUser, int colUser, int row, String col){
        
        Seat seat; 
         
-       arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+       arraySeat[rowUser - 1][colUser - 1].setOcupied(0);
         
-       Logado.setSeat(null, -1, -1); 
+       //Logado.setSeat(null, -1, -1); 
         
-       seat = reservation(arraySeat, row, col, Logado);
+       seat = reservation(arraySeat, row, col);
      
        return seat;
        
     }
     
-    public Seat realocatePurchase(Seat arraySeat[][], User Logado, int row, String col){
+    public Seat realocatePurchase(Seat arraySeat[][], int rowUser, int colUser, int row, String col, int colInt){
         
-       Seat oldSeat = Logado.getSeat();
+       //Seat oldSeat = Logado.getSeat();
        
-       Seat reserved = reservation(arraySeat, row, col, Logado);
+       Seat reserved = reservation(arraySeat, row, col);
        
        if(reserved != null){
            
            if(reserved.getOcupied() != 2){
                
-                //arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+                arraySeat[rowUser - 1][colUser - 1].setOcupied(0);
                 
-                oldSeat.setOcupied(0);
+                //oldSeat.setOcupied(0);
                 
-                buy(arraySeat,Logado);
+                buy(arraySeat, row, colInt);
                 
                 return reserved;
                 
@@ -226,13 +281,13 @@ public class Flight {
        
     }
     
-    public void cancel(Seat arraySeat[][], User Logado){
+    public void cancel(Seat arraySeat[][], int row, int col){
         
         
-            if(Logado.getCol() > -1 && Logado.getRow() > -1){
-                arraySeat[Logado.getRow() - 1][Logado.getCol() - 1].setOcupied(0);
+            if(row > 0 && col > 0){
+                arraySeat[row - 1][col - 1].setOcupied(0);
 
-                Logado.setSeat(null, -1, -1);
+                //Logado.setSeat(null, -1, -1);
 
                 System.out.println("Cancelation successful");
             }else{

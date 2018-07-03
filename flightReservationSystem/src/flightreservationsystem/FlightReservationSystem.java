@@ -136,9 +136,10 @@ public class FlightReservationSystem {
 
             int menuLogin = 100;
             int menuOptions = 100;
-            int menuFlight = 100;
+            int optionFlight;
 
             int row;
+            int colInt = 0;
 
             Scanner input = new Scanner(System.in);
 
@@ -151,7 +152,7 @@ public class FlightReservationSystem {
             long cellphone;
             long credit_card;
 
-            Seat seat; 
+            Seat seat = null; 
 
             while(menuLogin == 100 && menuOptions <= 105){
 
@@ -164,311 +165,510 @@ public class FlightReservationSystem {
 
                 if(menuLogin == 1){
 
-
+                    //Receiving e-mail entry
                     System.out.println("Email: ");
 
                     String emailLogin = input.next();
 
+                    //Reciving password entry
                     System.out.println("Password: ");
 
                     String PasswordLogin = input.next();
                     
+                    //Creating a query to find the user
                     DBObject query = new BasicDBObject("E-mail", emailLogin);
                     
                     DBCursor cursor = collection.find(query);
-                   
-                    //System.out.println(cursor.one().get("Name"));
                     
-                    DBObject toUser = cursor.one();
+                    //You're in the system
+                    System.out.println("\nHello, " + cursor.one().get("Name") + "!");
                     
-//                    for(User i: arrayUser){
-//
-//                        if(emailLogin.equals(i.getEmail())){
-//
-//                            if(PasswordLogin.equals(i.getPassword())){
-//
-//                                FlightReservationSystem.Logado = i;
-//
-//                                System.out.println("\nHello, " + Logado.getName() + "!");
-//
-//                                System.out.println("\nWhat do you want to do now?");
-//
-//                                menuOptions = 100;
-//
-//                                while(menuOptions == 100){
-//
-//                                    menuOptions = 99;
-//
-//                                    System.out.println("=========================");
-//                                    System.out.println("=   1- Consult          =");
-//                                    System.out.println("=   2- Reservate        =");
-//                                    System.out.println("=   3- Buy              =");
-//                                    System.out.println("=   4- Realocate        =");
-//                                    System.out.println("=   5- Cancel           =");
-//                                    System.out.println("=   6- Boarding Card    =");
-//                                    System.out.println("=   7- Log Out          =");
-//                                    System.out.println("=========================");
-//
-//                                    menuOptions = input.nextInt();
-//
-//                                    if(menuOptions == 1){
-//
-//                                        for (int j = 0;j < arrayFlight.size();j++){
-//
-//                                            System.out.printf("\n%d - ", j);
-//                                            arrayFlight.get(j).printFlight();
-//
-//                                        }
-//
-//                                        System.out.println("\nPlease, inform your flight. Ex: '1'");
-//
-//                                        menuFlight = input.nextInt();
-//
-//                                        newFlight = arrayFlight.get(menuFlight);
-//
-//                                        newFlight.seatMap();
-//
-//                                        menuOptions = 100;
-//
-//                                    } else if(menuOptions == 2){
-//
-//                                        for (int j = 0;j < arrayFlight.size();j++){
-//
-//                                            System.out.printf("\n%d - ", j);
-//                                            arrayFlight.get(j).printFlight();
-//
-//                                        }
-//
-//                                        System.out.println("\nPlease, inform your flight. Ex: '1'\n");
-//
-//                                        menuFlight = input.nextInt();
-//
-//                                        if(menuFlight < 3 ){
-//                                            newFlight = arrayFlight.get(menuFlight);
-//
-//                                            if (Logado.getSeat() == null){
-//
-//                                            newFlight.printFlight();
-//
-//                                            newFlight.seatMap();
-//
-//                                            System.out.println("\nInsert the row of your seat. Ex: 20 ");
-//
-//                                            row = input.nextInt();
-//
-//                                            System.out.println("\nInsert the collumn of your seat. Ex: C ");
-//
-//                                            col = input.next();
-//
-//                                            if (row <= 6){
-//
-//                                                String decision;
-//
-//                                                System.out.println("\nThis is a first class seat. Do you want to reserve it? [Y/N]");
-//
-//                                                decision = input.next();
-//
-//                                                if (decision.equalsIgnoreCase("Y")){
-//
-//                                                    seat = (FirstClass)newFlight.reservation(newFlight.getArraySeat(), row, col, FlightReservationSystem.Logado);
-//
-//                                                    newFlight.seatMap();
-//
-//                                                    Logado.getSeat();
-//
-//                                                    if(seat != null){
-//
-//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-//
-//                                                    }
-//
-//                                                } else {
-//
-//                                                    menuOptions = 2;
-//
-//                                                }
-//
-//                                            } else {
-//
-//                                                String decision;
-//
-//                                                System.out.println("\nThis is a economic class seat. Do you want to reserve it? [Y/N]");
-//
-//                                                decision = input.next();
-//
-//                                                if (decision.equalsIgnoreCase("Y")){
-//
-//                                                    seat = (EconomicClass)newFlight.reservation(newFlight.getArraySeat(), row, col, FlightReservationSystem.Logado);
-//
-//                                                    newFlight.seatMap();
-//
-//                                                    Logado.getSeat();
-//
-//                                                    if(seat != null){
-//
-//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-//
-//                                                    }
-//
-//                                                } else {
-//
-//                                                    menuOptions = 2;
-//
-//                                                }
-//
-//                                            }
-//
-//
-//                                            Logado.getSeat(); 
-//
-//                                        } else {
-//
-//                                            System.out.println("\nSorry, but you can reserve just one seat");
-//
-//                                        }
-//                                        }else{
-//                                            menuOptions = 100;
-//
-//                                        }
-//
-//
-//
-//
-//                                        menuOptions = 100;
-//
-//                                    } else if(menuOptions == 3){
-//
-//                                        if (Logado.getSeat() != null){
-//
-//                                            newFlight.buy(newFlight.getArraySeat(), Logado);  
-//
-//                                            newFlight.seatMap();
-//
-//                                        } else {
-//
-//                                            System.out.println("\nYou must reserve first");
-//
-//                                        }
-//
-//                                        menuOptions = 100;
-//
-//                                    } else if(menuOptions == 4){
-//
-//                                        System.out.println("\nInsert the row of your new seat. Ex: 20 ");
-//
-//                                        row = input.nextInt();
-//
-//                                        System.out.println("\nInsert the collumn of new your seat. Ex: C ");
-//
-//                                        col = input.next();
-//
-//                                        if (row <= 6){
-//
-//                                               String decision;
-//
-//                                               System.out.println("\nThis is a first class seat. Do you want to realocate2 it? [Y/N]");
-//
-//                                               decision = input.next();
-//
-//                                               if (decision.equalsIgnoreCase("Y")){
-//
-//                                                    if (Logado.getSeat().getOcupied() == 1){
-//
-//                                                        seat = newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
-//
-//                                                        if(seat != null){
-//
-//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-//
-//                                                        }
-//
-//                                                    } else if (Logado.getSeat().getOcupied() == 2){
-//
-//                                                        seat = newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
-//
-//                                                        if(seat != null){
-//
-//                                                         System.out.println("This seat will cost " + seat.getPrice() + " U$");
-//
-//                                                        }
-//
-//                                                    }
-//                                               } else {
-//
-//                                                   menuOptions = 4;
-//
-//                                               }
-//                                        } else {
-//
-//                                            String decision;
-//
-//                                               System.out.println("\nThis is a economic class seat. Do you want to realocate it? [Y/N]");
-//
-//                                               decision = input.next();
-//
-//                                               if (decision.equalsIgnoreCase("Y")){
-//
-//                                                    if (Logado.getSeat().getOcupied() == 1){
-//
-//                                                        seat = newFlight.realocateReservation(newFlight.getArraySeat(), Logado, row, col);
-//
-//                                                        System.out.println("This seat will cost " + seat.getPrice() + " U$");
-//
-//                                                    } else if (Logado.getSeat().getOcupied() == 2){
-//
-//                                                        seat = newFlight.realocatePurchase(newFlight.getArraySeat(), Logado, row, col);
-//
-//                                                        System.out.println("This seat will cost " + seat.getPrice() + " U$");
-//
-//                                                    }
-//                                               } else {
-//
-//                                                   menuOptions = 4;
-//
-//                                               }
-//
-//                                        }    
-//                                        menuOptions = 100;
-//
-//                                    } else if(menuOptions == 5){
-//
-//                                        newFlight.cancel(newFlight.getArraySeat(), Logado);
-//
-//                                        menuOptions = 100;
-//
-//                                    }else if(menuOptions == 6){
-//
-//                                        newFlight.printBoardingCard(Logado);
-//
-//                                        menuOptions = 100;
-//
-//                                    } else if(menuOptions == 7){
-//
-//                                        FlightReservationSystem.Logado = null;
-//
-//                                        menuOptions = 90;
-//
-//                                    }else{
-//
-//                                        menuOptions = 100;
-//                                        System.out.println("Please choose one of the options below");
-//                                    }
-//                                }
-//                            }else{
-//
-//                                System.out.println("\nIncorrect Password");
-//
-//                            }
-//
-//                        }else{
-//
-//                            //System.out.println("\nIncorrect Email");
-//
-//                        }
-//                    }
+                    System.out.println("\nWhat do you want to do now?");
+                    
+                    while (menuOptions != 7){
+                       //This is a menu
+                        System.out.println("=========================");
+                        System.out.println("=   1- Consult          =");
+                        System.out.println("=   2- Reservate        =");
+                        System.out.println("=   3- Buy              =");
+                        System.out.println("=   4- Realocate        =");
+                        System.out.println("=   5- Cancel           =");
+                        System.out.println("=   6- Boarding Card    =");
+                        System.out.println("=   7- Log Out          =");
+                        System.out.println("=========================");
 
-                    menuLogin = 100;
+                        //Reading the menu's options selected
+                        menuOptions = input.nextInt();
 
+                        switch(menuOptions){
+
+                            case 1:
+
+                                //If case 1, we'll consult the flights
+                                for (int j = 0;j < arrayFlight.size();j++){
+
+                                    System.out.printf("\n%d - ", j);
+                                    arrayFlight.get(j).printFlight();
+
+                                }
+
+                                System.out.println("\nPlease, inform your flight. Ex: '1'");
+
+                                //Reading the option entry
+                                optionFlight = input.nextInt();
+                                
+                                //Checking if the flight exist
+                                if (optionFlight < 3){
+                                    
+                                    //Selecting the flight informed
+                                    newFlight = arrayFlight.get(optionFlight);
+
+                                    //Printing the seats of this flight
+                                    newFlight.seatMap();
+                                    
+                                } else {
+                                    
+                                    System.out.println("\nSelect a existing flight\n");
+                                    
+                                }
+                                
+                                break;
+                                
+                            case 2:
+                                
+                                //If case 2, we'll reservate a seat
+                                for (int j = 0;j < arrayFlight.size();j++){
+
+                                    System.out.printf("\n%d - ", j);
+                                    arrayFlight.get(j).printFlight();
+
+                                }
+                                
+                                System.out.println("\nPlease, inform your flight. Ex: '1'\n");
+                                
+                                //Reading the option entry
+                                optionFlight = input.nextInt();
+                                
+                                //Checking if the flight exist
+                                if (optionFlight < 3){
+                                    
+                                    //Selecting the flight
+                                    newFlight = arrayFlight.get(optionFlight);
+                                    
+                                    if (cursor.one().get("Seat").equals("00")){
+                                        
+                                        //Print the flight name and hour
+                                        newFlight.printFlight();
+                                     
+                                        //Print the seat map
+                                        newFlight.seatMap();
+                                        
+                                        System.out.println("\nInsert the row of yout seat. Ex: 20");
+                                        
+                                        //Read the row informed
+                                        row = input.nextInt();
+                                        
+                                        System.out.println("\nInsert the collumn of your seat. Ex: C");
+                                        
+                                        //Read the collumn informed
+                                        col = input.next();
+                                        
+                                        //Check if it's a first class seat or not
+                                        if (row <= 6){
+                                            
+                                            String decision;
+                                            
+                                            System.out.println("\nThis is a first class seat. Do you want to buy it? [Y/N]");
+                                            
+                                            //Read the decision
+                                            decision = input.next();
+                                            
+                                            //Check if the user accepted
+                                            if (decision.equalsIgnoreCase("Y")){
+                                                                                               
+                                                //Reserve the seat
+                                                seat = (FirstClass)newFlight.reservation(newFlight.getArraySeat(), row, col);
+                                                
+                                                //Update the user's seat value in the database
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("Seat", row + col)));
+                                               
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("RowSeat", row)));
+                                                
+                                                if (col.equalsIgnoreCase("A")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 1)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("B")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 2)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("C")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 3)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("D")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 4)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("E")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 5)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("F")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 6)));
+                                                    
+                                                }
+                                                
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("SeatStatus", "reserved")));
+                                                
+                                                //Just print the new seat
+                                                System.out.println((String)cursor.one().get("Seat"));
+                                                
+                                                //Check if it's alright
+                                                if(seat != null){
+
+                                                    System.out.println("Reserved");
+
+                                                }
+                                                
+                                            } else {
+                                                
+                                                //If the user denied
+                                                menuOptions = 2;
+                                                
+                                            }
+                                            
+                                        } else {
+                                            
+                                            String decision;
+                                            
+                                            System.out.println("\nThis is a economic class seat. Do you want to reserve it? [Y/N]");
+                                            
+                                            //Read the user's decision
+                                            decision = input.next();
+                                            
+                                            //Check if the user accepted
+                                            if (decision.equalsIgnoreCase("Y")){
+                                                                        
+                                                //Make the reservation
+                                                seat = (EconomicClass)newFlight.reservation(newFlight.getArraySeat(), row, col);
+                                                
+                                                //Update the user's seat value
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("Seat", row + col)));
+                                               
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("RowSeat", row)));
+                                                
+                                                if (col.equalsIgnoreCase("A")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 1)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("B")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 2)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("C")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 3)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("D")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 4)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("E")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 5)));
+                                                    
+                                                } else if (col.equalsIgnoreCase("F")){
+                                                    
+                                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 6)));
+                                                    
+                                                }
+                                                
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("SeatStatus", "reserved")));
+                                                
+                                                //Print the new seat
+                                                System.out.println((String)cursor.one().get("Seat"));
+                                                
+                                                //Check if it's alright
+                                                if(seat != null){
+
+                                                    System.out.println("Reserved");
+
+                                                }
+                                                
+                                            } else {
+                                                
+                                                //return to the menu if the user didn't want to reservate
+                                                menuOptions = 2;
+                                                
+                                            }
+                                            
+                                        }
+                                        
+                                    } else {
+                                        
+                                        //If the user already have a reserve
+                                        System.out.println("\nSorry, but you can reserve just one seat.");
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                                    //If the user selected that do not exist
+                                    System.out.println("\nSelect a existing flight");
+                                    
+                                }
+                                
+                                break;
+                                
+                            case 3:
+                                
+                                if (!cursor.one().get("Seat").equals("00")){
+                                    
+                                    row = (int) cursor.one().get("RowSeat");
+                                    
+                                    colInt = (int) cursor.one().get("ColSeat");
+                                    
+                                    newFlight.buy(newFlight.getArraySeat(), row, colInt);
+                                    
+                                    newFlight.seatMap();
+                                    
+                                    collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("SeatStatus", "bought")));
+                                    
+                                    System.out.println("Purchase successful");
+                                    
+                                } else {
+                                    
+                                    System.out.println("\nYou must reserve first");
+                                    
+                                }
+                                
+                                break;
+                                
+                            case 4:
+                                
+                                if (!cursor.one().get("Seat").equals("00")){
+                                    
+                                    System.out.println("\nInsert the row of your new seat. Ex: 20");
+                                        
+                                    //Read the row informed
+                                    row = input.nextInt();
+
+                                    System.out.println("\nInsert the collumn of your new seat. Ex: C");
+
+                                    //Read the collumn informed
+                                    col = input.next();
+
+                                    int rowUser = (int) cursor.one().get("RowSeat");
+                                    int colUser = (int) cursor.one().get("ColSeat");
+
+                                    if (col.equalsIgnoreCase("A")){
+
+                                        colInt = 1;
+
+                                    } else if (col.equalsIgnoreCase("B")){
+
+                                        colInt = 2;
+
+                                    } else if (col.equalsIgnoreCase("C")){
+
+                                        colInt = 3;
+
+                                    } else if (col.equalsIgnoreCase("D")){
+
+                                        colInt = 4;
+
+                                    } else if (col.equalsIgnoreCase("E")){
+
+                                        colInt = 5;
+
+                                    } else if (col.equalsIgnoreCase("F")){
+
+                                        colInt = 6;
+
+                                    }
+
+                                    //Check if it's a first class seat or not
+                                    if (row <= 6){
+
+                                        String decision;
+
+                                        System.out.println("\nThis is a first class seat. Do you want to buy it? [Y/N]");
+
+                                        //Read the decision
+                                        decision = input.next();
+
+                                        //Check if the user accepted
+                                        if (decision.equalsIgnoreCase("Y")){
+
+                                            if(cursor.one().get("SeatStatus").equals("reserved")){
+
+                                                seat = newFlight.realocateReservation(newFlight.getArraySeat(), rowUser, colUser, row, col);
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("Seat", row + col)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("RowSeat", row)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", colInt)));
+
+                                                //Check if it's alright
+                                                if(seat != null){
+
+                                                    System.out.println("Realocated");
+
+                                                }
+
+                                            } else if (cursor.one().get("SeatStatus").equals("bought")){
+
+                                                seat = newFlight.realocatePurchase(newFlight.getArraySeat(), rowUser, colUser, row, col, colInt);
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("Seat", row + col)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("RowSeat", row)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", colInt)));
+
+                                                //Check if it's alright
+                                                if(seat != null){
+
+                                                    System.out.println("Realocated");
+
+                                                }
+
+                                            }
+
+                                            //Just print the new seat
+                                            System.out.println((String)cursor.one().get("Seat"));
+
+
+
+                                        } else {
+
+                                            //If the user denied
+                                            menuOptions = 2;
+
+                                        }
+
+                                    } else {
+
+                                        String decision;
+
+                                        System.out.println("\nThis is a economic class seat. Do you want to reserve it? [Y/N]");
+
+                                        //Read the user's decision
+                                        decision = input.next();
+
+                                        //Check if the user accepted
+                                        if (decision.equalsIgnoreCase("Y")){
+
+                                            if(cursor.one().get("SeatStatus").equals("reserved")){
+
+                                                seat = newFlight.realocateReservation(newFlight.getArraySeat(), rowUser, colUser, row, col);
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("Seat", row + col)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("RowSeat", row)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", colInt)));
+
+                                                //Check if it's alright
+                                                if(seat != null){
+
+                                                    System.out.println("Realocated");
+
+                                                }
+
+                                            } else if (cursor.one().get("SeatStatus").equals("bought")){
+
+                                                seat = newFlight.realocatePurchase(newFlight.getArraySeat(), rowUser, colUser, row, col, colInt);
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("Seat", row + col)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("RowSeat", row)));
+
+                                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", colInt)));
+
+                                                //Check if it's alright
+                                                if(seat != null){
+
+                                                    System.out.println("Realocated");
+
+                                                }
+
+                                            }
+
+                                            //Print the new seat
+                                            System.out.println((String)cursor.one().get("Seat"));
+
+                                        } else {
+
+                                            //return to the menu if the user didn't want to reservate
+                                            menuOptions = 2;
+
+                                        }
+
+                                    }
+                                    
+                                } else {
+                                    
+                                    System.out.println("You must have a seat first");
+                                    
+                                }
+                                
+                                break;
+                                
+                            case 5:
+                                
+                                row = (int) cursor.one().get("RowSeat");
+                                
+                                colInt = (int) cursor.one().get("ColSeat");
+                                
+                                newFlight.cancel(newFlight.getArraySeat(), row, colInt);
+                                
+                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("Seat", "00")));
+                                
+                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("RowSeat", 0)));
+                                
+                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("ColSeat", 0)));
+                                
+                                collection.update(new BasicDBObject("E-mail", emailLogin), new BasicDBObject("$set", new BasicDBObject("SeatStatus", "free")));
+                                
+                                break;
+                                
+                            case 6:
+                               
+                                if (cursor.one().get("SeatStatus").equals("bought")){
+                                    
+                                    System.out.println(newFlight.getID());
+                                    System.out.println(newFlight.getDestination());
+                                    System.out.println(newFlight.getDate());
+                                    System.out.println(newFlight.getGate());
+                                    System.out.println(newFlight.getHour());
+                                    System.out.println(cursor.one().get("Seat"));
+                                    System.out.println(cursor.one().get("SeatStatus"));
+                                    
+                                } else {
+                                    
+                                    System.out.println("You must buy a seat before printing your boarding card");
+                                    
+                                }
+                                
+                                break;
+                            case 7:
+                                
+                                System.out.println("Bye");
+                                
+                                break;
+                                
+                            default:
+
+                                //If a non valid option was given
+                                System.out.println("Please, choose one of the options belowGilson");
+                                
+                                break;
+                        } 
+                    }
 
                 }
                 if(menuLogin == 2){
